@@ -1,0 +1,9 @@
+streamlit
+langchain
+openai
+pandas
+openpysl
+sqlite3
+langchain-core
+langchain-openai
+langchain-community
