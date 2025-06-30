@@ -1,0 +1,64 @@
+Overview
+QnA_Agent is an AI-powered Streamlit application that allows users to upload Excel spreadsheets, automatically extracts and 
+stores the data in a local database, and interacts with an intelligent Q&A agent capable of answering questions based on the uploaded data.
+
+Project Structure
+QnA_Agent/
+│
+├── app.py              # Streamlit UI and application entry point
+├── load_file.py        # Handles file upload, processing, and DB insertion
+├── db.py               # Manages SQLite DB operations
+├── agent.py            # AI agent logic and LangChain integration
+
+1. app.py
+Purpose:
+The main script that runs the Streamlit app. It orchestrates file uploads, schema extraction, agent interaction, and chat UI.
+
+2. How to Run:
+streamlit run app.py
+Key Features:
+Uploads .xlsx Excel files via a UI.
+Loads and stores the file data into a local SQLite database.
+Extracts schema for AI understanding.
+Maintains a Q&A interface using Streamlit session state.
+Handles user queries and displays AI-generated answers contextually.
+
+
+3. Why SQLite?
+Problem Addressed:
+Each Excel file uploaded by users may have a completely different structure—columns, data types, and content vary from file to file. This eliminates the possibility of having a fixed database schema
+Solution:
+SQLite is used to:
+Dynamically create new tables based on the uploaded file’s structure.
+Quickly ingest and query, user-specific datasets in real-time.
+Run locally without extra infrastructure, keeping setup lightweight and portable.
+SQLite allows dynamic schema creation and fast data interaction, making it an ideal temporary backend for schema-less uploads.
+
+4. How the AI Agent Works (Natural Language → SQL → Natural Language)
+One of the key innovations of QnA_Agent lies in its ability to convert natural language queries into SQL, execute them 
+on dynamic data, and return human-friendly responses.
+Step-by-Step Flow:
+-User Input:
+The user types a natural language question (e.g., "What is the total sales across the months?").
+-LLM Interpretation:
+The GPT-4 model (via LangChain) uses the database schema as context to:
+Understand the user's intent.
+Generate the appropriate SQL query.
+-SQL Execution:
+The generated SQL is executed against the SQLite database containing the uploaded Excel data.
+-Result Processing:
+The SQL query returns results (e.g., rows from a table of sales for a month).
+-Answer Generation:
+The agent reads the raw result and converts it into a conversational, human-readable answer (e.g., "The total sales for each month are: Jan - 120K, Feb - 80K...").
+
+Inside agent.py: Tool-Based Reasoning
+LangChain allows defining a custom SQL execution tool, which:
+Takes natural language as input.
+Calls the SQL tool with schema awareness.
+Returns SQL results as intermediate steps.
+GPT-4 then uses these results to finalize a natural language answer.
+This tool-based architecture ensures the agent can:
+Use reasoning + tool usage to answer questions accurately.
+Handles a variety of user queries, even if the schema changes per file.
+
+
