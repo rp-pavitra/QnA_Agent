@@ -24,15 +24,16 @@ Maintains a Q&A interface using Streamlit session state.
 Handles user queries and displays AI-generated answers contextually.
 
 
-3. Why SQLite?
+3. Why DuckDB?
 Problem Addressed:
 Each Excel file uploaded by users may have a completely different structure—columns, data types, and content vary from file to file. This eliminates the possibility of having a fixed database schema
 Solution:
-SQLite is used to:
-Dynamically create new tables based on the uploaded file’s structure.
-Quickly ingest and query, user-specific datasets in real-time.
-Run locally without extra infrastructure, keeping setup lightweight and portable.
-SQLite allows dynamic schema creation and fast data interaction, making it an ideal temporary backend for schema-less uploads.
+DuckDB is used to:
+Optimized for columnar storage and vectorized execution.
+Super efficient on large files like Parquet or CSV.
+Outperforms Pandas or SQLite for big aggregations.
+Seamless Integration with Python/Pandas, can be used for unfixed schema.
+No server or installation required.
 
 4. How the AI Agent Works (Natural Language → SQL → Natural Language)
 One of the key innovations of QnA_Agent lies in its ability to convert natural language queries into SQL, execute them 
