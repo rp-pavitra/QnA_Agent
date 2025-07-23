@@ -3,7 +3,7 @@ langchain
 openai
 pandas
 openpysl
-sqlite3
+duckdb
 langchain-core
 langchain-openai
 langchain-community
